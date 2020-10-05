@@ -1,0 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%request.setCharacterEncoding("UTF-8");%>
+
+<div style="clear: both; width:1100px;"><!--footer start-->
+    footer
+</div><!--footer end-->
+
+</div><!--conteiner end-->
+
+</body>
+</html>

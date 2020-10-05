@@ -25,4 +25,14 @@
         <servlet-name>GetImage</servlet-name>
         <url-pattern>/GetImage</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetPdfBook</servlet-name>
+        <servlet-class>servlets.GetPdfBook</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetPdfBook</servlet-name>
+        <url-pattern>/GetPdfBook</url-pattern>
+    </servlet-mapping>
+
 </web-app>

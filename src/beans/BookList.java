@@ -16,6 +16,7 @@ public class BookList {
     private Statement statement;
     private ResultSet resultSet;
     private ArrayList<Book> bookArrayList = new ArrayList<>();
+    private ArrayList<Book> bookPdfArrayList = new ArrayList<>();
 
     private ArrayList<Book> getBooks(String query){
         try{
@@ -53,10 +54,11 @@ public class BookList {
     }
 
     public ArrayList<Book> getBookArrayListAll(){
-        return getBooks("SELECT b.id, b.name, b.page_count, b.isbn, g.name as genre, a.fio as author, b.publish_year, p.name as publisher, b.image, b.descr, b.rating, b.vote_count FROM book b "
-                + "inner join genre g on b.genre_id = g.id "
-                + "inner join author a on b.author_id = a.id "
-                + "inner join publisher p on b.publisher_id = p.id;");
+        return getBooks("SELECT b.id, b.name, b.page_count, b.isbn, g.name as genre, a.fio as author, b.publish_year, p.name as publisher, b.image, b.descr, b.rating, b.vote_count FROM book b " +
+                "inner join genre g on g.id = b.genre_id " +
+                "inner join author a on a.id = b.author_id " +
+                "inner join publisher p on p.id = b.publisher_id;");
+
     }
 
     public ArrayList<Book> getBookArrayListByGenre(String id){
@@ -93,6 +95,30 @@ public class BookList {
                     + "where b.name like '%"+searchText+"%';";
         }
         return getBooks(query);
+    }
+
+    public byte[] getBookContentPdf(int book_id){
+        byte[] pdfBook = null;
+        String query = "SELECT b.content FROM book b where b.id ='"+book_id+"';";
+        try{
+            connection = DBconnection.getDBconnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                pdfBook = resultSet.getBytes("content");
+            }
+        }catch (Exception e){
+            Logger.getLogger(BookList.class.getName()).log(Level.SEVERE, null, e);
+        }finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            }catch (SQLException e){
+                Logger.getLogger(BookList.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        return pdfBook;
     }
 
 }

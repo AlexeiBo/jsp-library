@@ -1,11 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>Login page</title>
+    <title>Start page</title>
       <link rel="stylesheet" type="text/css" href="stylesheet/index.css">
   </head>
 
   <body>
+  <%
+      if(request.getParameter("session") != null && request.getParameter("session").equals("0")){
+          request.getSession(false);
+      }
+  %>
   <div class="main">
       <div class="content">
           <p class="title"><span class="text"><img src="images/lib.png" width="76" height="77" hspace="10" vspace="10" align="middle"></span></p>
